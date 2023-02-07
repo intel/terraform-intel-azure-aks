@@ -12,7 +12,7 @@
 
 ## Usage
 
-See examples folder for code ./examples/intel-optimized-postgresql-server/main.tf
+See examples folder for code ./examples/industry_creation/main.tf
 
 Example of main.tf
 
@@ -40,3 +40,4 @@ terraform apply
 Note that this example may create resources. Run `terraform destroy` when you don't need these resources anymore.
 
 ## Considerations  
+Utilizing an industry best known method to create a base AKS cluster, this cluster will specify to use the latest generation of Intel Architecture (Ice Lake)
