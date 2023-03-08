@@ -15,7 +15,7 @@ Description: The configured "virtual_machine_size" should be an Intel Xeon 3rd G
 
 Resource type: azurerm_kubernetes_cluster
 
-Parameter: vm_size
+Parameter: agents_size
 
 Allowed Types
 
