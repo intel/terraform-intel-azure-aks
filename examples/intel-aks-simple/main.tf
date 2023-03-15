@@ -1,37 +1,5 @@
-<p align="center">
-  <img src="https://github.com/intel/terraform-intel-azure-aks/blob/main/images/logo-classicblue-800px.png?raw=true" alt="Intel Logo" width="250"/>
-</p>
-
-# Intel® Cloud Optimization Modules for Terraform
-
-© Copyright 2022, Intel Corporation
-
-## Azure AKS Module
-
-This code base implements the [Azure Terraform Azure AKS Module available on Terraform registry](https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
-
-The code selects Azure v5 instances for optimal cost and performance based on the Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake),
-[see more details here.](https://www.intel.com/content/www/us/en/developer/articles/technical/use-3rd-generation-xeon-processors-microsoft-azure.html#:~:text=and%20WordPress.-,Azure%20VM%20Offerings,-These%20VM%20images)
-
-The code will create an AKS cluster with a single AKS node group. The node group is a collection of Intel Ice Lake based v5 instance types. This node group is using an autoscaling configuration. Within this example, we have provided parameters to scale the minimum size, desired size and the maximum size of the AKS cluster.
-
-As of the time of creating this example, Azure AKS does not support the 4th generation on Intel Xeon scalable processors (code named Sapphire Rapids). We will update the module once Azure AKS supports the 4th generation Intel Xeon scalable processors.
-
-## Usage
-
-- Follow Microsoft's documentation to [install Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- Follow [Azure provider documentation to authenticate to Azure using your preferred method](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli)
-- Clone the repository, copy one of the examples from the examples folder to a new local folder
-- Modify the local variables in the main.tf file to suit your needs
-
-**See the ./examples/intel-aks-simple folder**
-
-Example of main.tf
-
-```hcl
-
 #########################################################
-# Modify local variables as needed                      #
+# Local variables, modify for your needs                #
 #########################################################
 
 ########################
@@ -48,7 +16,7 @@ Example of main.tf
 # https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/#pricing
 
 locals {
-  # See recommended instance types for Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake) above
+  # See above recommended instance types for Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake)
   vm_size                             = "Standard_D4ds_v5"
   resource_group_name                 = "terraform-testing-rg"
   virtual_network_name                = "akscluster50vnet"
@@ -57,20 +25,29 @@ locals {
 
 }
 #########################################################
+# End of local variables                                #
+#########################################################
+
+resource "random_id" "prefix" {
+  byte_length = 8
+}
 
 data "azurerm_subnet" "subnet" {
-  name                 = local.subnet_name  
+  name                 = local.subnet_name
   virtual_network_name = local.virtual_network_name
   resource_group_name  = local.virtual_network_resource_group_name
 }
 
-
+# AKS Module, see the following for options https://github.com/Azure/terraform-azurerm-aks/blob/main/variables.tf
 module "intel-aks-cluster" {
   source              = "Azure/aks/azurerm"
   version             = "~>6.7.1"
   prefix              = "cluster-${random_id.prefix.hex}"
   resource_group_name = local.resource_group_name
   admin_username      = "aksadmin"
+
+  # Intel Instance selection 
+  agents_size = local.vm_size
 
   # AKS Config
   http_application_routing_enabled = true
@@ -79,25 +56,21 @@ module "intel-aks-cluster" {
   sku_tier                         = "Paid"
   private_cluster_enabled          = false
   log_analytics_workspace_enabled  = false
-  #private_dns_zone_id              = "System"
-
-  # Intel Instance selection 
-  agents_size = local.vm_size
 
   # AKS Node Pool Config
-  enable_auto_scaling       = true
-  agents_availability_zones = ["1", "2", "3"]
-  agents_count              = null
-  agents_min_count          = 1
-  agents_max_count          = 18 # 6 nodes per AZ
-  agents_max_pods           = 100
-  agents_pool_name          = "nodepool01"
-  os_disk_type              = "Ephemeral" # Enhances performance and speeds up maintenance
-  vnet_subnet_id            = data.azurerm_subnet.subnet.id
-  net_profile_docker_bridge_cidr    = "170.10.0.1/16"
-  net_profile_service_cidr          = "10.0.0.0/16"
-  net_profile_dns_service_ip        = "10.0.0.10"
-  
+  enable_auto_scaling            = true
+  agents_availability_zones      = ["1", "2", "3"]
+  agents_count                   = null
+  agents_min_count               = 1
+  agents_max_count               = 18 # 6 nodes per AZ
+  agents_max_pods                = 100
+  agents_pool_name               = "nodepool01"
+  os_disk_type                   = "Ephemeral" # Requires local temp disk, enhances performance and speeds up maintenance
+  vnet_subnet_id                 = data.azurerm_subnet.subnet.id
+  net_profile_docker_bridge_cidr = "170.10.0.1/16"
+  net_profile_service_cidr       = "10.10.0.0/16"
+  net_profile_dns_service_ip     = "10.10.0.10"
+
   # RBAC Config
   rbac_aad                          = true
   rbac_aad_managed                  = true
@@ -105,22 +78,7 @@ module "intel-aks-cluster" {
 
   # Tags
   tags = {
-    Owner    = "IntelCloudOptimizationModules"
+    Owner    = "Intel.Cloud.Optimization.Modules"
     Duration = "1"
   }
 }
-
-```
-
-Run Terraform
-
-```hcl
-terraform init  
-terraform plan
-terraform apply
-
-```
-
-## Considerations  
-
-Note that this code base will create resources. Run `terraform destroy` when you don't need these resources anymore to minimize costs.  
