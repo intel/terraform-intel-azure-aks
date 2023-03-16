@@ -8,7 +8,7 @@
 
 ## Azure AKS Module
 
-This code base implements the [Azure Terraform  AKS Module] available on Terraform registry(https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
+This code base implements the Azure AKS Terraform Module available on Terraform registry(https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
 
 The code selects **Azure v5 instances based on the Intel Xeon 3rd Generation Scalable processors** (code-named Ice Lake) for optimal cost/performance,
 [see more details here.](https://www.intel.com/content/www/us/en/developer/articles/technical/use-3rd-generation-xeon-processors-microsoft-azure.html#:~:text=and%20WordPress.-,Azure%20VM%20Offerings,-These%20VM%20images)
