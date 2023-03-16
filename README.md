@@ -119,3 +119,29 @@ terraform apply
 ## Considerations  
 
 Note that this code base will create resources. Run `terraform destroy` when you don't need these resources anymore to minimize costs.  
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+No providers.
+
+## Modules
+
+No modules.
+
+## Resources
+
+No resources.
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
