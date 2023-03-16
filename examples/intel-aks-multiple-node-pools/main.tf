@@ -35,9 +35,10 @@ locals {
       net_profile_service_cidr       = "10.12.0.0/16"
       net_profile_dns_service_ip     = "10.12.0.10"
       tags = {
-        Owner    = "Intel.Cloud.Optimization.Modules"
+        Owner    = "user@example.com"
+        Module   = "Intel.Cloud.Optimization.Modules"
         Duration = "1"
-      }      
+      }
 
     },
 
@@ -56,14 +57,15 @@ locals {
       net_profile_dns_service_ip     = "10.13.0.10"
       # Tags
       tags = {
-        Owner    = "Intel.Cloud.Optimization.Modules"
+        Owner    = "user@example.com"
+        Module   = "Intel.Cloud.Optimization.Modules"
         Duration = "1"
       }
 
     }
-    
+
   }
-  
+
   # AKS RG and Network Config
   resource_group_name                 = "terraform-testing-rg"
   virtual_network_name                = "akscluster50vnet"
@@ -86,9 +88,9 @@ data "azurerm_subnet" "subnet" {
 
 # Azure AKS Module, see the following for options https://github.com/Azure/terraform-azurerm-aks/blob/main/variables.tf
 module "intel-aks-cluster" {
- source = "github.com/Azure/terraform-azurerm-aks"
- # source              = "Azure/aks/azurerm"
- # version             = "~>6.7.1"
+  source = "github.com/Azure/terraform-azurerm-aks"
+  #source              = "Azure/aks/azurerm"
+  #version             = "~>6.8.0"
   prefix              = "cluster-${random_id.prefix.hex}"
   resource_group_name = local.resource_group_name
   admin_username      = "aksadmin"
@@ -111,7 +113,7 @@ module "intel-aks-cluster" {
   net_profile_dns_service_ip     = "10.10.0.10"
 
   # Other Node Pool Config
-  node_pools          = local.node_pools
+  node_pools = local.node_pools
 
   # AKS Config
   http_application_routing_enabled = true
@@ -128,7 +130,8 @@ module "intel-aks-cluster" {
 
   # Tags
   tags = {
-    Owner    = "Intel.Cloud.Optimization.Modules"
+    Owner    = "user@example.com"
+    Module   = "Intel.Cloud.Optimization.Modules"
     Duration = "1"
   }
 }

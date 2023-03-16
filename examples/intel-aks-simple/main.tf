@@ -78,7 +78,8 @@ module "intel-aks-cluster" {
 
   # Tags
   tags = {
-    Owner    = "Intel.Cloud.Optimization.Modules"
+    Owner    = "user@example.com"
+    Module   = "Intel.Cloud.Optimization.Modules"
     Duration = "1"
   }
 }

@@ -55,7 +55,8 @@ locals {
       net_profile_service_cidr       = "10.12.0.0/16"
       net_profile_dns_service_ip     = "10.12.0.10"
       tags = {
-        Owner    = "Intel.Cloud.Optimization.Modules"
+        Owner    = "user@example.com"
+        Module    = "Intel.Cloud.Optimization.Modules"
         Duration = "1"
       }      
 
@@ -76,7 +77,8 @@ locals {
       net_profile_dns_service_ip     = "10.13.0.10"
       # Tags
       tags = {
-        Owner    = "Intel.Cloud.Optimization.Modules"
+        Owner    = "user@example.com"
+        Module    = "Intel.Cloud.Optimization.Modules"
         Duration = "1"
       }
 
@@ -148,7 +150,8 @@ module "intel-aks-cluster" {
 
   # Tags
   tags = {
-    Owner    = "Intel.Cloud.Optimization.Modules"
+    Owner    = "user@example.com"
+    Module    = "Intel.Cloud.Optimization.Modules"
     Duration = "1"
   }
 }
