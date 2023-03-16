@@ -8,23 +8,18 @@
 
 ## Azure AKS Module
 
-This code base implements the [Azure Terraform Azure AKS Module available on Terraform registry](https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
+This code base implements the [Azure Terraform  AKS Module] available on Terraform registry(https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
 
-The code selects Azure v5 instances for optimal cost and performance based on the Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake),
+The code selects **Azure v5 instances based on the Intel Xeon 3rd Generation Scalable processors** (code-named Ice Lake) for optimal cost/performance,
 [see more details here.](https://www.intel.com/content/www/us/en/developer/articles/technical/use-3rd-generation-xeon-processors-microsoft-azure.html#:~:text=and%20WordPress.-,Azure%20VM%20Offerings,-These%20VM%20images)
 
-The code will create an AKS cluster with a single AKS node group. The node group is a collection of Intel Ice Lake based v5 instance types. This node group is using an autoscaling configuration. Within this example, we have provided parameters to scale the minimum size, desired size and the maximum size of the AKS cluster.
+The code will create an AKS cluster with with one or many AKS node groups. The node group is a collection of Intel Ice Lake based v5 instance types using an autoscaling configuration. Within this example, we have provided parameters to scale the minimum size, and the maximum size of the AKS cluster.
 
-As of the time of creating this example, Azure AKS does not support the 4th generation on Intel Xeon scalable processors (code named Sapphire Rapids). We will update the module once Azure AKS supports the 4th generation Intel Xeon scalable processors.
+As of March 2023, Azure AKS does not support the 4th generation on Intel Xeon scalable processors (code named Sapphire Rapids). We will update the module once Azure AKS supports the 4th generation Intel Xeon scalable processors.
 
 ## Usage
 
-- Follow Microsoft's documentation to [install Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- Follow [Azure provider documentation to authenticate to Azure using your preferred method](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli)
-- Clone the repository, copy one of the examples from the examples folder to a new local folder
-- Modify the local variables in the main.tf file to suit your needs
-
-**See the ./examples/intel-aks-simple folder**
+**See the 'examples' folder for other examples**
 
 Example of main.tf
 
