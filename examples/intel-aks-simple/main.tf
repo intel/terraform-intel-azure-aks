@@ -53,7 +53,7 @@ module "intel-aks-cluster" {
   http_application_routing_enabled = true
   kubernetes_version               = "1.25" # Don't specify the patch version!
   automatic_channel_upgrade        = "patch"
-  sku_tier                         = "Paid"
+  sku_tier                         = "Free" #Options ["Free" "Standard" "Premium"]
   private_cluster_enabled          = false
   log_analytics_workspace_enabled  = false
 
