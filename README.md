@@ -136,8 +136,7 @@ No modules.
 
 ## Resources
 
-Links
-<https://azure.microsoft.com/en-us/products/virtual-machines/linux/>
+No resources.
 
 ## Inputs
 
