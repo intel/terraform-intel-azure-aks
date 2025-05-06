@@ -4,7 +4,7 @@
 
 # Intel® Optimized Cloud Modules for Terraform
 
-© Copyright 2024, Intel Corporation
+© Copyright 2025, Intel Corporation
 
 ## Azure AKS Module
 
@@ -136,7 +136,8 @@ No modules.
 
 ## Resources
 
-No resources.
+Links
+<https://azure.microsoft.com/en-us/products/virtual-machines/linux/>
 
 ## Inputs
 
